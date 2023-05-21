@@ -20,11 +20,11 @@ class Catagories extends StatelessWidget {
             childAspectRatio: 1.5,
             crossAxisSpacing: 20,
             mainAxisSpacing: 20),
-        children:  [
-          for(final category in availableCategories )
-          CategoryItem(category: category,)
-          
-          
+        children: [
+          for (final category in availableCategories)
+            CategoryItem(
+              category: category,
+            )
         ],
       ),
     );
