@@ -4,16 +4,7 @@ enum Length {
   long,
 }
 
-enum Reviews{
-  negetive,
-  mixed,
-  positive
-
-}
-
-
-
-
+enum Reviews { negetive, mixed, positive }
 
 class GameItem {
   const GameItem({
@@ -24,7 +15,7 @@ class GameItem {
     required this.platforms,
     required this.developorspublishers,
     required this.length,
-
+    required this.plot,
     required this.price,
     required this.reviews,
     required this.online,
@@ -32,13 +23,14 @@ class GameItem {
   });
 
   final String id;
+  final String plot;
   final List<String> developorspublishers;
   final List<String> categories;
   final String title;
   final String imageUrl;
   final List<String> platforms;
   final Length length;
-  final List<Map<String,int>> price;
+  final List<Map<String, int>> price;
   final Reviews reviews;
   final bool online;
   final bool esports;

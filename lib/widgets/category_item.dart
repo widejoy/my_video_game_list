@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:my_video_game_list/models/category.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key, required this.category});
+  const CategoryItem({super.key, required this.category, required this.onselect});
 
   final Category category;
-  @override
+  final void Function() onselect;
+    @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap:(){onselect();}
         
-      },splashFactory: InkRipple.splashFactory,
+      ,splashFactory: InkRipple.splashFactory,
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(16),
       child: Container(
