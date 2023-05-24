@@ -30,7 +30,7 @@ class GameItem {
   final String imageUrl;
   final List<String> platforms;
   final Length length;
-  final List<Map<String, int>> price;
+  final Map<String, int> price;
   final Reviews reviews;
   final bool online;
   final bool esports;

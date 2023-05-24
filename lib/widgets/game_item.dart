@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_video_game_list/models/game_item.dart';
+import 'package:my_video_game_list/screens/game_details.dart';
 import 'package:my_video_game_list/widgets/game_item_property.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -13,7 +14,14 @@ class Game extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.all(12),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return GameDetails(title: g.title,image: g.imageUrl,plot: g.plot,platforms: g.platforms,price:g.price);
+            }),
+          );
+        },
         child: Stack(
           children: [
             FadeInImage(
@@ -25,12 +33,9 @@ class Game extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-             
               child: Container(
-                
                 color: Colors.black54,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
