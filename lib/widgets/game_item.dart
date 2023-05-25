@@ -5,9 +5,12 @@ import 'package:my_video_game_list/widgets/game_item_property.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class Game extends StatelessWidget {
-  const Game({super.key, required this.g});
+  const Game({super.key, required this.g, required this.favourite,req, required this.icon});
 
   final GameItem g;
+  final IconData icon;
+    final void Function(GameItem game) favourite;
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class Game extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
-              return GameDetails(title: g.title,image: g.imageUrl,plot: g.plot,platforms: g.platforms,price:g.price);
+              return GameDetails(game: g,favourite: favourite,icon: icon,);
             }),
           );
         },

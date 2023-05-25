@@ -3,10 +3,13 @@ import 'package:my_video_game_list/models/game_item.dart';
 import 'package:my_video_game_list/widgets/game_item.dart';
 
 class GamesScreen extends StatelessWidget {
-  const GamesScreen({super.key, required this.title, required this.gameitem});
+  const GamesScreen({super.key, required this.title, required this.gameitem,required this.favourite, required this.icon});
 
   final String title;
   final List<GameItem> gameitem;
+    final void Function(GameItem game) favourite;
+    final IconData icon;
+
 
   @override
   Widget build(BuildContext context,) {
@@ -27,7 +30,7 @@ class GamesScreen extends StatelessWidget {
     } else {
       content = ListView.builder(itemBuilder: (ctx,i){
 
-        return Game(g: gameitem[i]);
+        return Game(g: gameitem[i],favourite: favourite,icon: icon,);
 
       },
       itemCount: gameitem.length);

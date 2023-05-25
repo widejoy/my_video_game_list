@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:my_video_game_list/data/data.dart';
+import 'package:my_video_game_list/models/game_item.dart';
 
 class GameDetails extends StatelessWidget {
   const GameDetails(
       {super.key,
-      required this.title,
-      required this.image,
-      required this.plot,
-      required this.platforms,
-      required this.price});
-  final String title;
-  final String image;
-  final String plot;
-  final List<String> platforms;
-  final Map<String, int> price;
+       required this.favourite, required this.game, required this.icon});
+  
+  final GameItem game;
+  final void Function(GameItem game) favourite;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
+      
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        actions: [IconButton(onPressed: (){favourite(game);}, icon:  Icon(icon))],
+        title: Text(game.title),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Image.network(
-              image,
+              game.imageUrl,
               height: 300,
               width: double.infinity,
             ),
@@ -51,7 +51,7 @@ class GameDetails extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            for (final i in platforms)
+            for (final i in game.platforms)
               Text(
                 i,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -82,7 +82,7 @@ class GameDetails extends StatelessWidget {
               height: 8,
             ),
             Text(
-              plot,
+              game.plot,
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
@@ -113,19 +113,19 @@ class GameDetails extends StatelessWidget {
               height: 8,
             ),
             Text(
-              'Steam: \$${price['steam'].toString()}',
+              'Steam: \$${game.price['steam'].toString()}',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             Text(
-              'Epic Games: \$${price['epic games'].toString()}',
+              'Epic Games: \$${game.price['epic games'].toString()}',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
             ),
             Text(
-              'GoG Games: \$${price['GoG'].toString()}',
+              'GoG Games: \$${game.price['GoG'].toString()}',
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),

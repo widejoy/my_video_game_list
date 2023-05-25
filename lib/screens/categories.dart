@@ -4,8 +4,14 @@ import 'package:my_video_game_list/screens/games_screen.dart';
 import 'package:my_video_game_list/widgets/category_item.dart';
 import 'package:my_video_game_list/models/category.dart';
 
+import '../models/game_item.dart';
+
 class Catagories extends StatelessWidget {
-  const Catagories({super.key});
+  const Catagories({super.key, required this.favourite, required this.icon});
+    final void Function(GameItem game) favourite;
+        final IconData icon;
+
+
 
   void _selectcategory(BuildContext context, Category category) {
     final filteredgames = 
@@ -16,7 +22,7 @@ class Catagories extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) {
-          return GamesScreen(title: category.title!, gameitem: filteredgames);
+          return GamesScreen(title: category.title, gameitem: filteredgames,favourite: favourite,icon: icon,);
         },
       ),
     );
@@ -24,14 +30,7 @@ class Catagories extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Title(
-          color: Colors.blue,
-          child: const Text('select your category'),
-        ),
-      ),
-      body: GridView(
+    return GridView(
         padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -47,7 +46,6 @@ class Catagories extends StatelessWidget {
               category: category,
             )
         ],
-      ),
-    );
+      );
   }
 }
