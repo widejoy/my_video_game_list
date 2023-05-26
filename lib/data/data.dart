@@ -99,7 +99,7 @@ GameItem(
       price: {"steam":60,
                "epic games":70,
                "GoG":55},
-      online: true,
+      online: false,
       esports: false,
       plot: '	"Over twenty years ago in Harran, we fought the virus—and lost. Now, were losing again. The City, one of the last large human settlements, is torn by conflict. Civilization has fallen back into the Dark Ages. And yet, we still have hope. You are a wanderer with the power to change the fate of The City. But your exceptional abilities come at a price. Haunted by memories you cannot decipher, you set out to learn the truth… and find yourself in a combat zone. Hone your skills, as to defeat your enemies and make allies, you’ll need both fists and wits. Unravel the dark secrets behind the wielders of power, choose sides and decide your destiny. But wherever your actions take you, theres one thing you can never forget—stay human."'
 ),

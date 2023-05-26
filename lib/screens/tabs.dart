@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_video_game_list/models/game_item.dart';
 import 'package:my_video_game_list/screens/categories.dart';
+import 'package:my_video_game_list/screens/filters_screen.dart';
 import 'package:my_video_game_list/screens/games_screen.dart';
 import 'package:my_video_game_list/widgets/main_drawer.dart';
 
@@ -53,6 +54,18 @@ class _Tabscreen extends State<Tabscreen> {
     });
   }
 
+  void _setscreen(String i) {
+    Navigator.of(context).pop();
+    if (i == 'Filters') {
+      
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const FiltersScreen(),
+        ),
+      );
+    } 
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget activepage = Catagories(
@@ -74,7 +87,7 @@ class _Tabscreen extends State<Tabscreen> {
       appBar: AppBar(
         title: Text(pagetitle),
       ),
-      drawer: const DrawerMain(),
+      drawer: DrawerMain(onSelectScreen: _setscreen),
       body: activepage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectpage,
