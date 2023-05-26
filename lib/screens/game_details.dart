@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_video_game_list/data/data.dart';
 import 'package:my_video_game_list/models/game_item.dart';
 
 class GameDetails extends StatelessWidget {

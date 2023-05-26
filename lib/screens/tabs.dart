@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_video_game_list/models/game_item.dart';
 import 'package:my_video_game_list/screens/categories.dart';
 import 'package:my_video_game_list/screens/games_screen.dart';
-import 'package:my_video_game_list/widgets/game_item.dart';
+import 'package:my_video_game_list/widgets/main_drawer.dart';
 
 class Tabscreen extends StatefulWidget {
   const Tabscreen({
@@ -17,7 +17,7 @@ class Tabscreen extends StatefulWidget {
 
 class _Tabscreen extends State<Tabscreen> {
   int _selectedindex = 0;
-  IconData icon = Icons.star_border;
+  IconData icon = Icons.library_add;
   final List<GameItem> _favouritegames = [];
   void _showinfomessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -35,14 +35,14 @@ class _Tabscreen extends State<Tabscreen> {
       setState(() {
         _favouritegames.remove(i);
 
-        icon = Icons.star_border;
+        icon = Icons.library_add_check;
       });
-      _showinfomessage('Game is no longer a favourite');
+      _showinfomessage('Game is no longer in your list');
     } else {
       setState(() {
         _favouritegames.add(i);
-        icon = Icons.star;
-        _showinfomessage('Game is added as favourite');
+        icon = Icons.library_add;
+        _showinfomessage('Game is added to your list');
       });
     }
   }
@@ -68,24 +68,25 @@ class _Tabscreen extends State<Tabscreen> {
         favourite: favourite,
         icon: icon,
       );
-      pagetitle = 'Your Favourites';
+      pagetitle = 'my List';
     }
     return Scaffold(
       appBar: AppBar(
         title: Text(pagetitle),
       ),
+      drawer: const DrawerMain(),
       body: activepage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectpage,
         currentIndex: _selectedindex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.set_meal),
+            icon: Icon(Icons.category),
             label: 'Categories',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: 'Favorites',
+            icon: Icon(Icons.library_books_sharp),
+            label: 'My list',
           )
         ],
       ),
