@@ -57,7 +57,6 @@ class _Tabscreen extends State<Tabscreen> {
   void _setscreen(String i) {
     Navigator.of(context).pop();
     if (i == 'Filters') {
-      
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const FiltersScreen(),
