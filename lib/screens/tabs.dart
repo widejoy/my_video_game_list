@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:my_video_game_list/data/data.dart';
 import 'package:my_video_game_list/models/game_item.dart';
-import 'package:my_video_game_list/provider.dart';
 import 'package:my_video_game_list/screens/categories.dart';
 import 'package:my_video_game_list/screens/filters_screen.dart';
 import 'package:my_video_game_list/screens/games_screen.dart';
 import 'package:my_video_game_list/widgets/main_drawer.dart';
+import 'package:my_video_game_list/my_providers/provider.dart';
+
+const kInitiealFilters = {Filter.esports: false, Filter.offline: false};
 
 class Tabscreen extends ConsumerStatefulWidget {
   const Tabscreen({
@@ -19,6 +22,8 @@ class Tabscreen extends ConsumerStatefulWidget {
 }
 
 class _Tabscreen extends ConsumerState<Tabscreen> {
+  Map<Filter, bool> _selectedfilters = kInitiealFilters;
+
   int _selectedindex = 0;
   IconData icon = Icons.library_add;
   final List<GameItem> _favouritegames = [];
@@ -57,23 +62,39 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
   }
 
   void _setscreen(String i) async {
+    
     Navigator.of(context).pop();
     if (i == 'Filters') {
-      Navigator.of(context).push<Map<Filter, bool>>(
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
           builder: (context) => const FiltersScreen(),
         ),
       );
+      setState(() {
+        _selectedfilters = result ?? kInitiealFilters;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(prov);
+        final game = ref.watch(prov);
+
+    final availablegames = game.where((element) {
+      if (_selectedfilters[Filter.offline]! && !element.online) {
+        return false;
+      }
+      if (_selectedfilters[Filter.esports]! && !element.esports) {
+        return false;
+      }
+      return true;
+
+    }).toList();
 
     Widget activepage = Catagories(
       favourite: favourite,
       icon: icon,
+      availablegames: availablegames,
     );
     var pagetitle = 'Categories';
 
