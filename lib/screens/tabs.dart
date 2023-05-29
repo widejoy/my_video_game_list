@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_video_game_list/models/game_item.dart';
+import 'package:my_video_game_list/provider.dart';
 import 'package:my_video_game_list/screens/categories.dart';
 import 'package:my_video_game_list/screens/filters_screen.dart';
 import 'package:my_video_game_list/screens/games_screen.dart';
 import 'package:my_video_game_list/widgets/main_drawer.dart';
 
-class Tabscreen extends StatefulWidget {
+class Tabscreen extends ConsumerStatefulWidget {
   const Tabscreen({
     super.key,
   });
 
   @override
-  State<Tabscreen> createState() {
+  ConsumerState<Tabscreen> createState() {
     return _Tabscreen();
   }
 }
 
-class _Tabscreen extends State<Tabscreen> {
+class _Tabscreen extends ConsumerState<Tabscreen> {
   int _selectedindex = 0;
   IconData icon = Icons.library_add;
   final List<GameItem> _favouritegames = [];
@@ -54,19 +56,21 @@ class _Tabscreen extends State<Tabscreen> {
     });
   }
 
-  void _setscreen(String i) {
+  void _setscreen(String i) async {
     Navigator.of(context).pop();
     if (i == 'Filters') {
-      Navigator.of(context).push(
+      Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
           builder: (context) => const FiltersScreen(),
         ),
       );
-    } 
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(prov);
+
     Widget activepage = Catagories(
       favourite: favourite,
       icon: icon,
