@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 enum Filter { offline, esports }
 
 class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key});
+  const FiltersScreen({super.key, required this.currentfiltes});
+
+  final Map<Filter, bool> currentfiltes;
 
   @override
   State<FiltersScreen> createState() {
@@ -14,10 +16,17 @@ class FiltersScreen extends StatefulWidget {
 }
 
 class _FilterScreen extends State<FiltersScreen> {
-  @override
-  Widget build(BuildContext context) {
-    var isoffline = false;
+  var isoffline = false;
     var isesports = false;
+  @override
+  void initState() {
+    super.initState();
+    isoffline = widget.currentfiltes[Filter.offline]!;
+    isesports = widget.currentfiltes[Filter.esports]!;
+
+  }
+  Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filters'),
