@@ -9,6 +9,8 @@ import 'package:my_video_game_list/screens/games_screen.dart';
 import 'package:my_video_game_list/widgets/main_drawer.dart';
 import 'package:my_video_game_list/my_providers/provider.dart';
 
+import '../my_providers/filters_provider.dart';
+
 const kInitiealFilters = {Filter.esports: false, Filter.offline: false};
 
 class Tabscreen extends ConsumerStatefulWidget {
@@ -23,7 +25,6 @@ class Tabscreen extends ConsumerStatefulWidget {
 }
 
 class _Tabscreen extends ConsumerState<Tabscreen> {
-  Map<Filter, bool> _selectedfilters = kInitiealFilters;
 
   int _selectedindex = 0;
   IconData icon = Icons.library_add;
@@ -41,14 +42,12 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
     
     Navigator.of(context).pop();
     if (i == 'Filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+      await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (context) =>  FiltersScreen(currentfiltes: _selectedfilters),
+          builder: (context) =>  const FiltersScreen(),
         ),
       );
-      setState(() {
-        _selectedfilters = result ?? kInitiealFilters;
-      });
+     
     }
   }
 
@@ -57,10 +56,11 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
         final game = ref.watch(prov);
 
     final availablegames = game.where((element) {
-      if (_selectedfilters[Filter.offline]! && !element.online) {
+      final activefilters = ref.watch(filtersprov);
+      if (activefilters[Filter.offline]! && !element.online) {
         return false;
       }
-      if (_selectedfilters[Filter.esports]! && !element.esports) {
+      if (activefilters[Filter.esports]! && !element.esports) {
         return false;
       }
       return true;

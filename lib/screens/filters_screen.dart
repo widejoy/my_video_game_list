@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../my_providers/filters_provider.dart';
 
 // import 'package:my_video_game_list/screens/tabs.dart';
 // import 'package:my_video_game_list/widgets/main_drawer.dart';
-enum Filter { offline, esports }
 
-class FiltersScreen extends StatefulWidget {
-  const FiltersScreen({super.key, required this.currentfiltes});
-
-  final Map<Filter, bool> currentfiltes;
+class FiltersScreen extends ConsumerStatefulWidget {
+  const FiltersScreen({
+    super.key,
+  });
 
   @override
-  State<FiltersScreen> createState() {
+  ConsumerState<FiltersScreen> createState() {
     return _FilterScreen();
   }
 }
 
-class _FilterScreen extends State<FiltersScreen> {
+class _FilterScreen extends ConsumerState<FiltersScreen> {
   var isoffline = false;
-    var isesports = false;
+  var isesports = false;
   @override
   void initState() {
     super.initState();
-    isoffline = widget.currentfiltes[Filter.offline]!;
-    isesports = widget.currentfiltes[Filter.esports]!;
-
+    final activefilters = ref.read(filtersprov);
+    isoffline = activefilters[Filter.offline]!;
+    isesports = activefilters[Filter.esports]!;
   }
+
+  @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filters'),
@@ -45,9 +47,9 @@ class _FilterScreen extends State<FiltersScreen> {
       // ),
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.of(context)
-              .pop({Filter.esports: isesports, Filter.offline: isoffline});
-          return false;
+          ref.read(filtersprov.notifier).setallfilters(
+              {Filter.esports: isesports, Filter.offline: isoffline});
+          return true;
         },
         child: Column(
           children: [

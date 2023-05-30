@@ -19,6 +19,6 @@ class Favouritegamesprovider extends StateNotifier<List<GameItem>> {
 }
 
 final favouriteGamesprov =
-    StateNotifierProvider<Favouritegamesprovider, List<GameItem>>(
-  (ref) => Favouritegamesprovider(),
-);
+      StateNotifierProvider<Favouritegamesprovider, List<GameItem>>(
+    (ref) => Favouritegamesprovider(),
+  );
