@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_video_game_list/data/data.dart';
 import 'package:my_video_game_list/models/game_item.dart';
+import 'package:my_video_game_list/my_providers/favourites.dart';
 import 'package:my_video_game_list/screens/categories.dart';
 import 'package:my_video_game_list/screens/filters_screen.dart';
 import 'package:my_video_game_list/screens/games_screen.dart';
@@ -26,34 +27,9 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
 
   int _selectedindex = 0;
   IconData icon = Icons.library_add;
-  final List<GameItem> _favouritegames = [];
-  void _showinfomessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
 
-  void favourite(GameItem i) {
-    final isExisting = _favouritegames.contains(i);
 
-    if (isExisting) {
-      setState(() {
-        _favouritegames.remove(i);
 
-        icon = Icons.library_add_check;
-      });
-      _showinfomessage('Game is no longer in your list');
-    } else {
-      setState(() {
-        _favouritegames.add(i);
-        icon = Icons.library_add;
-        _showinfomessage('Game is added to your list');
-      });
-    }
-  }
 
   void _selectpage(int index) {
     setState(() {
@@ -92,17 +68,16 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
     }).toList();
 
     Widget activepage = Catagories(
-      favourite: favourite,
       icon: icon,
       availablegames: availablegames,
     );
     var pagetitle = 'Categories';
 
     if (_selectedindex == 1) {
+      final favgames =ref.watch(favouriteGamesprov);
       activepage = GamesScreen(
         title: 'title',
-        gameitem: _favouritegames,
-        favourite: favourite,
+        gameitem: favgames ,
         icon: icon,
       );
       pagetitle = 'my List';

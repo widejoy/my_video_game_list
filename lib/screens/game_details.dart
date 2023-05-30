@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_video_game_list/models/game_item.dart';
+import 'package:my_video_game_list/my_providers/favourites.dart';
 
-class GameDetails extends StatelessWidget {
-  const GameDetails(
-      {super.key,
-       required this.favourite, required this.game, required this.icon});
-  
+class GameDetails extends ConsumerWidget {
+  const GameDetails({super.key, required this.game, required this.icon});
+
   final GameItem game;
-  final void Function(GameItem game) favourite;
   final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
-      
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        actions: [IconButton(onPressed: (){favourite(game);}, icon:  Icon(icon))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                final added = ref.read(favouriteGamesprov.notifier).togglegamesfav(game);
+                  ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(added ? 'meal added' : 'meal removed'),
+      ),
+    );
+              },
+              icon: Icon(icon))
+        ],
         title: Text(game.title),
       ),
       body: SingleChildScrollView(
@@ -94,12 +103,10 @@ class GameDetails extends StatelessWidget {
                 const SizedBox(
                   width: 150,
                 ),
-                const Icon(Icons.price_change_sharp)
-                ,
-                 const SizedBox(
-              width: 6,
-            ),
-
+                const Icon(Icons.price_change_sharp),
+                const SizedBox(
+                  width: 6,
+                ),
                 Text(
                   'Price',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(

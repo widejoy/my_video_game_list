@@ -10,10 +10,8 @@ import '../models/game_item.dart';
 class Catagories extends StatelessWidget {
   const Catagories(
       {super.key,
-      required this.favourite,
       required this.icon,
       required this.availablegames});
-  final void Function(GameItem game) favourite;
   final List<GameItem> availablegames;
   final IconData icon;
 
@@ -30,7 +28,6 @@ class Catagories extends StatelessWidget {
           return GamesScreen(
             title: category.title,
             gameitem: filteredgames,
-            favourite: favourite,
             icon: icon,
           );
         },
