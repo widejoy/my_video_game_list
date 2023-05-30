@@ -5,30 +5,18 @@ import '../my_providers/filters_provider.dart';
 // import 'package:my_video_game_list/screens/tabs.dart';
 // import 'package:my_video_game_list/widgets/main_drawer.dart';
 
-class FiltersScreen extends ConsumerStatefulWidget {
+class FiltersScreen extends ConsumerWidget {
   const FiltersScreen({
     super.key,
   });
 
-  @override
-  ConsumerState<FiltersScreen> createState() {
-    return _FilterScreen();
-  }
-}
+  
 
-class _FilterScreen extends ConsumerState<FiltersScreen> {
-  var isoffline = false;
-  var isesports = false;
-  @override
-  void initState() {
-    super.initState();
-    final activefilters = ref.read(filtersprov);
-    isoffline = activefilters[Filter.offline]!;
-    isesports = activefilters[Filter.esports]!;
-  }
 
+  
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final filteract = ref.watch(filtersprov);    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filters'),
@@ -45,18 +33,13 @@ class _FilterScreen extends ConsumerState<FiltersScreen> {
       //     }
       //   },
       // ),
-      body: WillPopScope(
-        onWillPop: () async {
-          ref.read(filtersprov.notifier).setallfilters(
-              {Filter.esports: isesports, Filter.offline: isoffline});
-          return true;
-        },
-        child: Column(
+      body: 
+        Column(
           children: [
             SwitchListTile(
-              value: isoffline,
+              value: filteract[Filter.offline]!,
               onChanged: (isof) {
-                isoffline = true;
+                ref.read(filtersprov.notifier).setFilter(Filter.offline, isof);
               },
               title: Text(
                 'Offline',
@@ -74,9 +57,9 @@ class _FilterScreen extends ConsumerState<FiltersScreen> {
               contentPadding: const EdgeInsets.only(left: 34, right: 22),
             ),
             SwitchListTile(
-              value: isesports,
+              value: filteract[Filter.esports]!,
               onChanged: (isof) {
-                isesports = true;
+                ref.read(filtersprov.notifier).setFilter(Filter.esports, isof);
               },
               title: Text(
                 'only esports',
@@ -95,7 +78,6 @@ class _FilterScreen extends ConsumerState<FiltersScreen> {
             )
           ],
         ),
-      ),
-    );
+      );
   }
 }
