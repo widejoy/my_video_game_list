@@ -79,7 +79,7 @@ class _CatagoriesState extends State<Catagories>
         ],
       ),
       builder: (context, child) => Padding(
-        padding: EdgeInsets.only(top: 100 - _animationcontroller.value * 100),child: child,
+        padding: EdgeInsets.only(top: 40 - _animationcontroller.value * 40),child: child,
       ),
     );
   }
