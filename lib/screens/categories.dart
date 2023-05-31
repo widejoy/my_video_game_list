@@ -6,16 +6,40 @@ import 'package:my_video_game_list/models/category.dart';
 
 import '../models/game_item.dart';
 
-class Catagories extends StatelessWidget {
+class Catagories extends StatefulWidget {
   const Catagories(
-      {super.key,
-      required this.icon,
-      required this.availablegames});
+      {super.key, required this.icon, required this.availablegames});
   final List<GameItem> availablegames;
   final IconData icon;
 
+  @override
+  State<Catagories> createState() => _CatagoriesState();
+}
+
+class _CatagoriesState extends State<Catagories>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationcontroller;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationcontroller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+    _animationcontroller.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationcontroller.dispose();
+    super.dispose();
+  }
+
   void _selectcategory(BuildContext context, Category category) {
-    final filteredgames = availablegames
+    final filteredgames = widget.availablegames
         .where(
           (element) => element.categories.contains(category.id),
         )
@@ -27,7 +51,6 @@ class Catagories extends StatelessWidget {
           return GamesScreen(
             title: category.title,
             gameitem: filteredgames,
-       
           );
         },
       ),
@@ -36,22 +59,28 @@ class Catagories extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return GridView(
-      padding: const EdgeInsets.all(24),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1.5,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20),
-      children: [
-        for (final category in availableCategories)
-          CategoryItem(
-            onselect: () {
-              _selectcategory(context, category);
-            },
-            category: category,
-          )
-      ],
+    return AnimatedBuilder(
+      animation: _animationcontroller,
+      child: GridView(
+        padding: const EdgeInsets.all(24),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1.5,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+        children: [
+          for (final category in availableCategories)
+            CategoryItem(
+              onselect: () {
+                _selectcategory(context, category);
+              },
+              category: category,
+            )
+        ],
+      ),
+      builder: (context, child) => Padding(
+        padding: EdgeInsets.only(top: 100 - _animationcontroller.value * 100),child: child,
+      ),
     );
   }
 }
