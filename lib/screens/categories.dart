@@ -3,7 +3,6 @@ import 'package:my_video_game_list/data/data.dart';
 import 'package:my_video_game_list/screens/games_screen.dart';
 import 'package:my_video_game_list/widgets/category_item.dart';
 import 'package:my_video_game_list/models/category.dart';
-import 'package:my_video_game_list/widgets/game_item.dart';
 
 import '../models/game_item.dart';
 
@@ -28,7 +27,7 @@ class Catagories extends StatelessWidget {
           return GamesScreen(
             title: category.title,
             gameitem: filteredgames,
-            icon: icon,
+       
           );
         },
       ),

@@ -4,7 +4,7 @@ enum Filter { offline, esports }
 
 class Filtersprovider extends StateNotifier<Map<Filter, bool>> {
   Filtersprovider()
-      : super({Filter.esports, Filter.offline} as Map<Filter, bool>);
+      : super({Filter.esports:false, Filter.offline:false});
 
   void setFilter(Filter filter, bool active) {
     state = {...state, filter: active};

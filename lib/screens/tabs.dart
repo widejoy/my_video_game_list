@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:my_video_game_list/data/data.dart';
-import 'package:my_video_game_list/models/game_item.dart';
+
 import 'package:my_video_game_list/my_providers/favourites.dart';
 import 'package:my_video_game_list/screens/categories.dart';
 import 'package:my_video_game_list/screens/filters_screen.dart';
@@ -78,7 +77,7 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
       activepage = GamesScreen(
         title: 'title',
         gameitem: favgames ,
-        icon: icon,
+        
       );
       pagetitle = 'my List';
     }

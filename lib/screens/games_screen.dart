@@ -3,21 +3,20 @@ import 'package:my_video_game_list/models/game_item.dart';
 import 'package:my_video_game_list/widgets/game_item.dart';
 
 class GamesScreen extends StatelessWidget {
-  const GamesScreen({super.key, required this.title, required this.gameitem, required this.icon});
+  const GamesScreen({super.key, required this.title, required this.gameitem, });
 
   final String title;
   final List<GameItem> gameitem;
-    final IconData icon;
 
 
   @override
   Widget build(BuildContext context,) {
     Widget content;
     if (gameitem.isEmpty) {
-      content = Center(
+      content = const Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             Text('uh oh.....  looks empty',style: TextStyle(color: Colors.white,fontSize: 30),),
             SizedBox(
               height: 16,
@@ -29,7 +28,7 @@ class GamesScreen extends StatelessWidget {
     } else {
       content = ListView.builder(itemBuilder: (ctx,i){
 
-        return Game(g: gameitem[i],icon: icon,);
+        return Game(g: gameitem[i]);
 
       },
       itemCount: gameitem.length);

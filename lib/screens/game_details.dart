@@ -2,29 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_video_game_list/models/game_item.dart';
 import 'package:my_video_game_list/my_providers/favourites.dart';
+import 'package:my_video_game_list/my_providers/provider.dart';
 
 class GameDetails extends ConsumerWidget {
-  const GameDetails({super.key, required this.game, required this.icon});
+  const GameDetails({super.key, required this.game});
 
   final GameItem game;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final favouritegames = ref.watch(prov);
+    final isfav = favouritegames.contains(game);
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                final added = ref.read(favouriteGamesprov.notifier).togglegamesfav(game);
-                  ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(added ? 'meal added' : 'meal removed'),
-      ),
-    );
-              },
-              icon: Icon(icon))
+            onPressed: () {
+              final added =
+                  ref.read(favouriteGamesprov.notifier).togglegamesfav(game);
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(added ? 'game added' : 'game removed'),
+                ),
+              );
+            },
+            icon: Icon(isfav ? Icons.star : Icons.star_border),
+          )
         ],
         title: Text(game.title),
       ),

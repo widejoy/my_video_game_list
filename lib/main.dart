@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_video_game_list/screens/tabs.dart';
@@ -19,6 +20,13 @@ void main() {
       child: App(),
     ),
   );
+  FlutterError.demangleStackTrace = (StackTrace stack) {
+    if (stack is stack_trace.Trace) return stack.vmTrace;
+    if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
+    return stack;
+  };
+
+  
 }
 
 class App extends StatelessWidget {
