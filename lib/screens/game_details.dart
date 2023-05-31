@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_video_game_list/models/game_item.dart';
 import 'package:my_video_game_list/my_providers/favourites.dart';
-import 'package:my_video_game_list/my_providers/provider.dart';
 
 class GameDetails extends ConsumerWidget {
   const GameDetails({super.key, required this.game});
@@ -11,7 +11,7 @@ class GameDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favouritegames = ref.watch(prov);
+    final favouritegames = ref.watch(favouriteGamesprov);
     final isfav = favouritegames.contains(game);
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +27,16 @@ class GameDetails extends ConsumerWidget {
                 ),
               );
             },
-            icon: Icon(isfav ? Icons.star : Icons.star_border),
+            icon: AnimatedSwitcher(
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween<double>(begin: 0.5,end:1).animate(animation),
+                  child: child,
+                );
+              },
+              duration: const Duration(milliseconds: 200),
+              child: Icon(isfav ? Icons.star : Icons.star_border,key: ValueKey(isfav),),
+            ),
           )
         ],
         title: Text(game.title),
@@ -35,10 +44,12 @@ class GameDetails extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Image.network(
-              game.imageUrl,
-              height: 300,
-              width: double.infinity,
+            Hero(tag: game.id,
+              child: Image.network(
+                game.imageUrl,
+                height: 300,
+                width: double.infinity,
+              ),
             ),
             const SizedBox(
               height: 60,

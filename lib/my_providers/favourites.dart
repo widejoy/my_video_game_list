@@ -5,14 +5,14 @@ import '../models/game_item.dart';
 class Favouritegamesprovider extends StateNotifier<List<GameItem>> {
   Favouritegamesprovider() : super([]);
 
-  bool togglegamesfav(GameItem game) {
-    final gameIscontains = state.contains(game);
+  bool togglegamesfav(GameItem i) {
+    final gameIscontains = state.contains(i);
 
     if (gameIscontains) {
-      state = state.where((element) => element.id != game.id).toList();
+      state = state.where((element) => element.id != i.id).toList();
       return false;
     } else {
-      state = [...state, game];
+      state = [...state, i];
       return true;
     }
   }

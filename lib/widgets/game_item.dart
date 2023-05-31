@@ -25,10 +25,12 @@ class Game extends StatelessWidget {
         },
         child: Stack(
           children: [
-            FadeInImage(
-              placeholder: MemoryImage(kTransparentImage),
-              image: NetworkImage(g.imageUrl),
-              fit: BoxFit.cover,
+            Hero(tag: g.id,
+              child: FadeInImage(
+                placeholder: MemoryImage(kTransparentImage),
+                image: NetworkImage(g.imageUrl),
+                fit: BoxFit.cover,
+              ),
             ),
             Positioned(
               bottom: 0,

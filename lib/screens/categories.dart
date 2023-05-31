@@ -25,7 +25,7 @@ class _CatagoriesState extends State<Catagories>
     super.initState();
     _animationcontroller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
       lowerBound: 0,
       upperBound: 1,
     );
@@ -60,27 +60,27 @@ class _CatagoriesState extends State<Catagories>
   @override
   Widget build(context) {
     return AnimatedBuilder(
-      animation: _animationcontroller,
-      child: GridView(
-        padding: const EdgeInsets.all(24),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.5,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        children: [
-          for (final category in availableCategories)
-            CategoryItem(
-              onselect: () {
-                _selectcategory(context, category);
-              },
-              category: category,
-            )
-        ],
-      ),
-      builder: (context, child) => Padding(
-        padding: EdgeInsets.only(top: 40 - _animationcontroller.value * 40),child: child,
-      ),
-    );
+        animation: _animationcontroller,
+        child: GridView(
+          padding: const EdgeInsets.all(24),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.5,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20),
+          children: [
+            for (final category in availableCategories)
+              CategoryItem(
+                onselect: () {
+                  _selectcategory(context, category);
+                },
+                category: category,
+              )
+          ],
+        ),
+        builder: (context, child) => SlideTransition(
+              position: _animationcontroller.drive(Tween(begin:const Offset(0,0.2),end: const Offset(0,0)),),
+              child: child,
+            ));
   }
 }
