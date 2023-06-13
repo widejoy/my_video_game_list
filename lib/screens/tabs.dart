@@ -24,12 +24,8 @@ class Tabscreen extends ConsumerStatefulWidget {
 }
 
 class _Tabscreen extends ConsumerState<Tabscreen> {
-
   int _selectedindex = 0;
   IconData icon = Icons.library_add;
-
-
-
 
   void _selectpage(int index) {
     setState(() {
@@ -38,21 +34,19 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
   }
 
   void _setscreen(String i) async {
-    
     Navigator.of(context).pop();
     if (i == 'Filters') {
       await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (context) =>  const FiltersScreen(),
+          builder: (context) => const FiltersScreen(),
         ),
       );
-     
     }
   }
 
   @override
   Widget build(BuildContext context) {
-        final game = ref.watch(prov);
+    final game = ref.watch(prov);
 
     final availablegames = game.where((element) {
       final activefilters = ref.watch(filtersprov);
@@ -63,7 +57,6 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
         return false;
       }
       return true;
-
     }).toList();
 
     Widget activepage = Catagories(
@@ -73,11 +66,10 @@ class _Tabscreen extends ConsumerState<Tabscreen> {
     var pagetitle = 'Categories';
 
     if (_selectedindex == 1) {
-      final favgames =ref.watch(favouriteGamesprov);
+      final favgames = ref.watch(favouriteGamesprov);
       activepage = GamesScreen(
-        title: 'title',
-        gameitem: favgames ,
-        
+        gameitem: favgames,
+        title: '',
       );
       pagetitle = 'my List';
     }

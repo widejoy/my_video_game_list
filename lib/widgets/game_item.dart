@@ -5,10 +5,9 @@ import 'package:my_video_game_list/widgets/game_item_property.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class Game extends StatelessWidget {
-  const Game({super.key, required this.g,req});
+  const Game({super.key, required this.g, req});
 
   final GameItem g;
-
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +18,19 @@ class Game extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
-              return GameDetails(game: g,);
+              return GameDetails(
+                game: g,
+              );
             }),
           );
         },
         child: Stack(
           children: [
-            Hero(tag: g.id,
+            Hero(
+              tag: g.id,
               child: FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
-                image: NetworkImage(g.imageUrl),
+                image: AssetImage(g.imageUrl),
                 fit: BoxFit.cover,
               ),
             ),

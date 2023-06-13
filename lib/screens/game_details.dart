@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_video_game_list/models/game_item.dart';
@@ -30,12 +29,15 @@ class GameDetails extends ConsumerWidget {
             icon: AnimatedSwitcher(
               transitionBuilder: (child, animation) {
                 return RotationTransition(
-                  turns: Tween<double>(begin: 0.5,end:1).animate(animation),
+                  turns: Tween<double>(begin: 0.5, end: 1).animate(animation),
                   child: child,
                 );
               },
               duration: const Duration(milliseconds: 200),
-              child: Icon(isfav ? Icons.star : Icons.star_border,key: ValueKey(isfav),),
+              child: Icon(
+                isfav ? Icons.star : Icons.star_border,
+                key: ValueKey(isfav),
+              ),
             ),
           )
         ],
@@ -44,8 +46,9 @@ class GameDetails extends ConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Hero(tag: game.id,
-              child: Image.network(
+            Hero(
+              tag: game.id,
+              child: Image.asset(
                 game.imageUrl,
                 height: 300,
                 width: double.infinity,
@@ -104,11 +107,14 @@ class GameDetails extends ConsumerWidget {
             const SizedBox(
               height: 8,
             ),
-            Text(
-              game.plot,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                game.plot,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+              ),
             ),
             const SizedBox(
               height: 34,
